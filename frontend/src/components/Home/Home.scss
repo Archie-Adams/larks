@@ -92,23 +92,6 @@ body {
           display: block;
           opacity: 1;
         }
-        
-      display: flex;
-      width: fit-content;
-      margin: 16px 16px;
-      max-width: 150px;
-    
-      img {
-        max-width: 130px;
-        font-size: 16px;
-        transition: 0.3s;
-        cursor: pointer;
-        border-radius: 20px;
-        border: 1px solid rgb(204, 204, 204);
-
-        width: 130px;        
-        height: 130px;       
-
       }
     }
   }
@@ -118,33 +101,7 @@ body {
 
   .home-image {
     width: 100%;
-    position: bottom;
+    position: fixed;
     z-index: 0; /* Ensure the image is behind other elements */
-  }
-}
-
-
-/* Media query for mobile devices */
-@media (max-width: 768px) {
-  .home {
-    padding-top: 10px; /* Adjust top padding for smaller screens */
-
-    .app-links-container {
-      display: flex;
-      flex-direction: column; /* Change direction to vertical for mobile */
-      align-items: center; /* Center-align items */
-      padding: 20px; /* Add padding for better spacing */
-    }
-
-    .app-link {
-      width: 80%; /* Adjust width for better mobile view */
-    }
-
-    .home-image {
-      position: static; /* Change the position to static for smaller screens */
-      width: 100%; /* Adjust image width */
-    }
-
-    /* Additional mobile-specific styles can be added here */
   }
 }

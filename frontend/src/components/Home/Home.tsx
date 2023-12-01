@@ -12,7 +12,6 @@ import ease_mind_logo from "./logos/ease-mind.png";
 import autism_detector_logo from "./logos/autism-detector.png";
 import chatbot_logo from "./logos/chatbot.png"
 import homeImage from "../../images/home.png";
-import DepressiLess_logo from "./logos/DepressiLess-logo.png"
 
 interface IAppLink {
   to: string;
@@ -111,62 +110,6 @@ const Home = () => {
         ))}
       </div>
       <img src={homeImage} alt="home" className="home-image" />
-
-      <AppLink
-        to="/dipstik"
-        logo={dipstik_logo}
-        alt="Dipstik_App_Lanre"
-        dataCy="lanreAppLogo"
-      />
-
-      <AppLink
-        to="/paralysis-analysis"
-        logo={paralysis_analysis_logo}
-        alt="Stroke_App_Ramat"
-        dataCy="paralysisAnalysisLink"
-      />
-
-      <AppLink
-        to="/shreyas/tonsillitis_instructions"
-        logo={tonsillitis_detector_logo}
-        alt="Tonsilitis_App_Shreyas"
-        dataCy="shreyasAppLogo"
-      />
-
-      <AppLink
-        to="/roots-radar"
-        logo={roots_radar_logo}
-        alt="Roots Radar App"
-        dataCy="Roots-Radar-App"
-      />
-
-      <AppLink
-        to="/EaseMind"
-        logo={ease_mind_logo}
-        alt="EaseMind App"
-        dataCy="easelogo"
-      />
-
-      <AppLink
-        to="/autism_instructions"
-        logo={autism_detector_logo}
-        alt="Autism_App"
-        dataCy="ayeshasAppLogo"
-      />
-
-      <AppLink
-        to="/food_allergy_chatbot"
-        logo={chatbot_logo}
-        alt="chatbot_Logo"
-        dataCy="chatbotlogo"
-      />
-
-      <AppLink
-        to="/DepressiLess"
-        logo={DepressiLess_logo}
-        alt="DepressiLess App"
-        dataCy="DepressiLessLogo"
-      />
     </div>
   );
 };
