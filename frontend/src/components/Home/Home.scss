@@ -78,6 +78,26 @@
           opacity: 1;
           top: 20%
         }
+<<<<<<< HEAD
+=======
+        
+      display: flex;
+      width: fit-content;
+      margin: 16px 16px;
+      max-width: 150px;
+    
+      img {
+        max-width: 130px;
+        font-size: 16px;
+        transition: 0.3s;
+        cursor: pointer;
+        border-radius: 20px;
+        border: 1px solid rgb(204, 204, 204);
+
+        width: 130px;        
+        height: 130px;       
+
+>>>>>>> Ayesha
       }
     }
 
