@@ -23,7 +23,7 @@ class User_Login(db.Model):
             raise AssertionError('Email address missing "@" symbol')
         # return email field and chain validate the password
         return email
-
+# dsfjhsdkfhjsg
     @validates('password')
     def validate_password(self, key, password):
         # Check for empty password
