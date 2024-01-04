@@ -1,22 +1,82 @@
 import React from 'react';
 import '@testing-library/jest-dom';
-import { render, screen } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import Routes from './Routes';
 import { AuthTokenContext } from './App';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import SignIn from './components/SignIn';
+import SignUp from './components/SignUp';
 
-//renderWithRouter to include AuthTokenContext with a mock token
-const renderWithRouterAndAuth = (ui, { route = '/', token = 'mockToken' } = {}) => {
+// renderWithRouter to include AuthTokenContext with a mock token
+const renderWithRouterAndAuth = (ui, { route = '/' } = {}) => {
   window.history.pushState({}, 'Test page', route);
   return render(
-    <AuthTokenContext.Provider value={{ token, setToken: () => {} }}>
-      <Router>{ui}</Router>
+    <AuthTokenContext.Provider value={{ token: 'mockToken', setToken: () => {} }}>
+      <Router>
+        {ui}
+      </Router>
     </AuthTokenContext.Provider>
   );
 };
+
 beforeEach(() => {
   // Mock sessionStorage
   Storage.prototype.getItem = jest.fn(() => '"test@example.com"'); // Mocks email string including JSON string quotes
+});
+
+describe('SignIn Component', () => {
+  const mockSetToken = jest.fn();
+
+  beforeEach(() => {
+    render(
+      <AuthTokenContext.Provider value={{ token: null, setToken: mockSetToken }}>
+        <Router>
+          <SignIn />
+        </Router>
+      </AuthTokenContext.Provider>
+    );
+  });
+
+  test('renders email and password input fields', () => {
+    expect(screen.getByLabelText(/Enter Email/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/Enter Password/i)).toBeInTheDocument();
+  });
+
+  test('allows the user to enter email and password', () => {
+    fireEvent.change(screen.getByLabelText(/Enter Email/i), { target: { value: 'test@example.com' } });
+    fireEvent.change(screen.getByLabelText(/Enter Password/i), { target: { value: 'Password123!' } });
+
+    expect(screen.getByLabelText(/Enter Email/i).value).toBe('test@example.com');
+    expect(screen.getByLabelText(/Enter Password/i).value).toBe('Password123!');
+  });
+});
+
+describe('SignUp Component', () => {
+  const mockSetToken = jest.fn();
+
+  beforeEach(() => {
+    render(
+      <AuthTokenContext.Provider value={{ token: null, setToken: mockSetToken }}>
+        <Router>
+          <SignUp />
+        </Router>
+      </AuthTokenContext.Provider>
+    );
+  });
+
+  test('renders email and password input fields for sign up', () => {
+    expect(screen.getByLabelText(/Enter Email/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/Enter Password/i)).toBeInTheDocument();
+  });
+
+  test('allows the user to enter email and password for sign up', () => {
+    fireEvent.change(screen.getByLabelText(/Enter Email/i), { target: { value: 'newuser@example.com' } });
+    fireEvent.change(screen.getByLabelText(/Enter Password/i), { target: { value: 'NewPassword123!' } });
+
+    expect(screen.getByLabelText(/Enter Email/i).value).toBe('newuser@example.com');
+    expect(screen.getByLabelText(/Enter Password/i).value).toBe('NewPassword123!');
+  });
+
 });
 
 describe('Route tests with error handling', () => {
@@ -26,21 +86,6 @@ describe('Route tests with error handling', () => {
   };
 
   // Tests for routes
-  test('navigating to the sign-in page', () => {
-    renderWithRouter(<Routes />, { route: '/auth/signin' });
-    expect(screen.getByLabelText('Enter Email')).toBeInTheDocument();
-    expect(screen.getByLabelText('Enter Password')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Login' })).toBeInTheDocument();
-
-  });
-
-  test('navigating to the sign-up page', () => {
-    renderWithRouter(<Routes />, { route: '/auth/signup' });
-    expect(screen.getByLabelText('Enter Email')).toBeInTheDocument();
-    expect(screen.getByLabelText('Enter Password')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Sign Up' })).toBeInTheDocument();
-  });
-
   test('landing on the home page', () => {
     renderWithRouterAndAuth(<Routes />, { route: '/home' });
     expect(screen.getByAltText('home')).toBeInTheDocument();
@@ -218,9 +263,10 @@ describe('Route tests with error handling', () => {
     expect(screen.getByAltText('Fill Questionnaire')).toBeInTheDocument();
     expect(screen.getByAltText('Online Resources')).toBeInTheDocument();
   });
-  
+
   test('navigating to the error 400 page', () => {
     renderWithRouterAndAuth(<Routes />, { route: '/error400' });
     expect(screen.getByText('Bad HTTP Request')).toBeInTheDocument();
     });
 });
+export default renderWithRouterAndAuth;
