@@ -1,5 +1,5 @@
-
 import React from 'react';
+import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import Routes from './src/Routes';
@@ -74,5 +74,8 @@ describe('Route tests with error handling', () => {
   test('navigating to DepressiLess main page', () => {
     renderWithRouter(<Routes />, { route: '/DepressiLess' });
   });
- //todo: error handling
+  test('navigating to the error 400 page', () => {
+    renderWithRouter(<Routes />, { route: '/error400' });
+    expect(screen.getByText('Bad HTTP Request')).toBeInTheDocument();
+  });
 });
