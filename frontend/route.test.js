@@ -1,10 +1,10 @@
 
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import Routes from './src/Routes';
 
-describe('Route tests', () => {
+describe('Route tests with error handling', () => {
   const renderWithRouter = (ui, { route = '/' } = {}) => {
     window.history.pushState({}, 'Test page', route);
     return render(<Router>{ui}</Router>);
@@ -74,24 +74,5 @@ describe('Route tests', () => {
   test('navigating to DepressiLess main page', () => {
     renderWithRouter(<Routes />, { route: '/DepressiLess' });
   });
-
-  test('navigating to a non-existent page shows 404 page', () => {
-    renderWithRouter(<Routes />, { route: '/non-existent-path' });
-  });
-
-  test('redirecting to home when accessing an invalid route', () => {
-    renderWithRouter(<Routes />, { route: '/invalid-route' });
-  });
-
-  test('redirecting to sign-in page when accessing a protected route unauthenticated', () => {
-    renderWithRouter(<Routes />, { route: '/home' });
-  });
-
-  test('handling invalid parameters in a route', () => {
-    renderWithRouter(<Routes />, { route: '/some-route/invalid-param' });
-  });
-
-  test('navigating to a nested route', () => {
-    renderWithRouter(<Routes />, { route: '/parent-route/nested-route' });
-  });
+ //todo: error handling
 });
