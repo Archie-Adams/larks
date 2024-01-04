@@ -3,7 +3,7 @@ import '@testing-library/jest-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 import Routes from './Routes';
 import { AuthTokenContext } from './App';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import SignIn from './components/SignIn';
 import SignUp from './components/SignUp';
 
@@ -76,15 +76,9 @@ describe('SignUp Component', () => {
     expect(screen.getByLabelText(/Enter Email/i).value).toBe('newuser@example.com');
     expect(screen.getByLabelText(/Enter Password/i).value).toBe('NewPassword123!');
   });
-
 });
 
 describe('Route tests with error handling', () => {
-  const renderWithRouter = (ui, { route = '/' } = {}) => {
-    window.history.pushState({}, 'Test page', route);
-    return render(<Router>{ui}</Router>);
-  };
-
   // Tests for routes
   test('landing on the home page', () => {
     renderWithRouterAndAuth(<Routes />, { route: '/home' });
@@ -104,7 +98,7 @@ describe('Route tests with error handling', () => {
 
   test('navigating to the Paralysis Analysis page', () => {
     renderWithRouterAndAuth(<Routes />, { route: '/paralysis-analysis' });
-    expect(screen.getByText(/Straighten your head as best as you can, keep a neutral expresssion and take a picture./)).toBeInTheDocument();
+    expect(screen.getByText('Welcome to Paralysis Analysis')).toBeInTheDocument();
   });
 
   test('navigating to Skin Scan main page', () => {
@@ -131,8 +125,6 @@ describe('Route tests with error handling', () => {
 
   test('navigating to Skin Scan outcome negative', () => {
     renderWithRouterAndAuth(<Routes />, { route: '/skin-scan/outcome_negative' });
-  
-    // Check for the presence of specific elements on the outcome negative page
     expect(screen.getByText('Skin Scan')).toBeInTheDocument();
     expect(screen.getByText('Image Analysis Results')).toBeInTheDocument();
     expect(screen.getByText('Outcome - Benign')).toBeInTheDocument();
