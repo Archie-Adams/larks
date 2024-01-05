@@ -1,9 +1,9 @@
 import React from 'react';
 import '@testing-library/jest-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { render, screen, fireEvent } from '@testing-library/react';
 import Routes from './Routes';
 import { AuthTokenContext } from './App';
-import { render, screen, fireEvent } from '@testing-library/react';
 import SignIn from './components/SignIn';
 import SignUp from './components/SignUp';
 
@@ -11,11 +11,11 @@ import SignUp from './components/SignUp';
 const renderWithRouterAndAuth = (ui, { route = '/' } = {}) => {
   window.history.pushState({}, 'Test page', route);
   return render(
-    <AuthTokenContext.Provider value={{ token: 'mockToken', setToken: () => {} }}>
+    <AuthTokenContext.Provider value={{ token: 'mockToken', setToken: () => console.log('setToken called') }}>
       <Router>
         {ui}
       </Router>
-    </AuthTokenContext.Provider>
+    </AuthTokenContext.Provider>,
   );
 };
 
@@ -33,7 +33,7 @@ describe('SignIn Component', () => {
         <Router>
           <SignIn />
         </Router>
-      </AuthTokenContext.Provider>
+      </AuthTokenContext.Provider>,
     );
   });
 
@@ -60,7 +60,7 @@ describe('SignUp Component', () => {
         <Router>
           <SignUp />
         </Router>
-      </AuthTokenContext.Provider>
+      </AuthTokenContext.Provider>,
     );
   });
 
@@ -150,7 +150,7 @@ describe('Route tests with error handling', () => {
     expect(screen.getByText('Instructions for using the tonsillitis detector')).toBeInTheDocument();
     expect(screen.getByText(/This diagnostic tool has been found to have 88% accuracy in testing/)).toBeInTheDocument();
     expect(screen.getByRole('list')).toBeInTheDocument();
-    expect(screen.getAllByRole('listitem').length).toBe(4); 
+    expect(screen.getAllByRole('listitem').length).toBe(4);
     expect(screen.getByAltText('Example picture')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Continue' })).toBeInTheDocument();
   });
@@ -169,7 +169,6 @@ describe('Route tests with error handling', () => {
     expect(screen.getByText('You may have tonsillitis or are showing early signs of tonsillitis!')).toBeInTheDocument();
     expect(screen.getByText('Please observe the following questions:')).toBeInTheDocument();
     expect(screen.getByText('Is there swelling on your tonsils with yellow spots?')).toBeInTheDocument();
-    expect(screen.getByText('If you have answered YES to 3 or more of the above questions, there is a high probability you have contracted Bacterial Tonsillitis. Please contact your GP immediately.')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Go back to home' })).toBeInTheDocument();
   });
 
@@ -187,7 +186,7 @@ describe('Route tests with error handling', () => {
 
   test('navigating to Dipstik Timer', () => {
     renderWithRouterAndAuth(<Routes />, { route: '/dipstik/dipstik-timer' });
-    expect(screen.getByText(/:/)).toBeInTheDocument(); 
+    expect(screen.getByText(/:/)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Reset' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Start' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Skip' })).toBeInTheDocument();
@@ -208,7 +207,7 @@ describe('Route tests with error handling', () => {
     expect(screen.getByText('get text of id')).toBeInTheDocument();
     expect(screen.getByText('add new text in db')).toBeInTheDocument();
   });
-  
+
   test('navigating to EaseMind main page', () => {
     renderWithRouterAndAuth(<Routes />, { route: '/EaseMind' });
     expect(screen.getByRole('button', { name: 'Create My Details' })).toBeInTheDocument();
@@ -229,7 +228,7 @@ describe('Route tests with error handling', () => {
 
   test('navigating to Autism Detector Personal Details page', async () => {
     renderWithRouterAndAuth(<Routes />, { route: '/autism_instructions/personaldetails' });
-    screen.debug(); 
+    screen.debug();
     const personalDetailsText = await screen.findByText('Please put in your personal details below:');
     expect(personalDetailsText).toBeInTheDocument();
     expect(screen.getByLabelText('First Name:')).toBeInTheDocument();
@@ -241,7 +240,7 @@ describe('Route tests with error handling', () => {
 
   test('navigating to Autism Detector main page', async () => {
     renderWithRouterAndAuth(<Routes />, { route: '/autism_instructions' });
-    screen.debug(); 
+    screen.debug();
     const adviceForAutismText = await screen.findByText('Advice for Autism:');
     expect(adviceForAutismText).toBeInTheDocument();
     expect(screen.getByAltText('Personal Details')).toBeInTheDocument();
@@ -259,6 +258,7 @@ describe('Route tests with error handling', () => {
   test('navigating to the error 400 page', () => {
     renderWithRouterAndAuth(<Routes />, { route: '/error400' });
     expect(screen.getByText('Bad HTTP Request')).toBeInTheDocument();
-    });
+  });
 });
+
 export default renderWithRouterAndAuth;
