@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faArrowsRotate, faPaperPlane } from '@fortawesome/free-solid-svg-icons'
 import { useNavigate } from "react-router-dom";
 import * as cvstfjs from "@microsoft/customvision-tfjs";
+import useWindowSize from '../../hooks/useWindowSize';
 
 let BASEURL = "";
 process.env.NODE_ENV === "development"
@@ -115,9 +116,9 @@ const detectDipstick = async () => {
   // COMBINED
   // 	Trying to do the dimensions stuff.
 	// Rounded to floats to ensure dimensions used here make sense, only issue I see right now
-	const size = useWindowSize();
-	var cameraHeight = Math.round(size.height);
-  var cameraWidth = Math.round(size.width);
+  const windowSize = useWindowSize();
+  var cameraHeight = Math.round(windowSize.height);
+  var cameraWidth = Math.round(windowSize.width);
 
 	// This code attempts for the dimensions of the camera to be in a 1:1 aspect ratio, by taking the previous measurements of the size of the screen.
 	// Takes the smaller of the two calcs of width and height, to ensure it will fit on the screen.
