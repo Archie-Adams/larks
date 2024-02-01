@@ -1,7 +1,9 @@
 import React from 'react';
 import '@testing-library/jest-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { render, screen, fireEvent, act, waitFor } from '@testing-library/react';
+import {
+  render, screen, fireEvent, act, waitFor,
+} from '@testing-library/react';
 import Routes from './Routes';
 import { AuthTokenContext } from './App';
 import SignIn from './components/SignIn';
@@ -15,7 +17,6 @@ const renderWithRouterAndAuth = (ui, { route = '/' } = {}) => {
       <Router>
         {ui}
       </Router>
-    
     </AuthTokenContext.Provider>,
   );
 };
@@ -35,7 +36,7 @@ describe('SignIn', () => {
           <AuthTokenContext.Provider value={{ token: null, setToken: setTokenMock }}>
             <SignIn />
           </AuthTokenContext.Provider>
-        </Router>
+        </Router>,
       );
     });
   });
@@ -51,8 +52,8 @@ describe('SignIn', () => {
       fireEvent.change(screen.getByPlaceholderText('Email'), { target: { value: 'test@example.com' } });
       fireEvent.change(screen.getByPlaceholderText('Password'), { target: { value: 'Password123!' } });
     });
-  })
-})
+  });
+});
 
 describe('SignUp Component', () => {
   const mockSetToken = jest.fn();
@@ -125,7 +126,7 @@ describe('Route tests with error handling', () => {
       expect(screen.getByText('Image Submission')).toBeInTheDocument();
     });
   });
-  
+
   test('navigating to Skin Scan outcome positive', async () => {
     renderWithRouterAndAuth(<Routes />, { route: '/skin-scan/outcome_positive' });
     await waitFor(() => {
@@ -145,7 +146,7 @@ describe('Route tests with error handling', () => {
       expect(screen.getByText(/Prediction Probability:/)).toBeInTheDocument();
     });
   });
-  
+
   test('navigating to Skin Scan instructions', async () => {
     renderWithRouterAndAuth(<Routes />, { route: '/skin-scan/instructions' });
     await waitFor(() => {
@@ -175,7 +176,7 @@ describe('Route tests with error handling', () => {
       expect(screen.getByRole('button', { name: 'Continue' })).toBeInTheDocument();
     });
   });
-  
+
   test('navigating to shreyas tonsillitis outcome 1', async () => {
     renderWithRouterAndAuth(<Routes />, { route: '/shreyas/tonsillitis_outcome_1' });
     await waitFor(() => {
@@ -196,7 +197,7 @@ describe('Route tests with error handling', () => {
       expect(screen.getByRole('button', { name: 'Go back to home' })).toBeInTheDocument();
     });
   });
-  
+
   test('navigating to Dipstik Instructions page', async () => {
     renderWithRouterAndAuth(<Routes />, { route: '/dipstik' });
     await waitFor(() => {
@@ -206,26 +207,12 @@ describe('Route tests with error handling', () => {
     });
   });
 
-  jest.mock('./hooks/useWindowSize', () => ({
-    __esModule: true,
-    default: () => ({
-      width: 1024, // Specify the mock width for the test environment
-      height: 768, // Specify the mock height for the test environment
-    }),
-  }));
-
   test('navigating to Dipstik Camera page shows initial instructions', async () => {
     renderWithRouterAndAuth(<Routes />, { route: '/dipstik/dipstik-camera' });
     const instructionMessage = await screen.findByText('Fit the dipstick within the guides');
     expect(instructionMessage).toBeInTheDocument();
   });
 
-  test('navigating to Dipstik Camera page shows initial instructions', async () => {
-      renderWithRouterAndAuth(<Routes />, { route: '/dipstik/dipstik-camera' });
-      const instructionMessage = await screen.findByText('Fit the dipstick within the guides');
-      expect(instructionMessage).toBeInTheDocument();
-  });
-  
   test('navigating to Dipstik Timer', async () => {
     renderWithRouterAndAuth(<Routes />, { route: '/dipstik/dipstik-timer' });
     await waitFor(() => {
@@ -246,7 +233,7 @@ describe('Route tests with error handling', () => {
       expect(screen.getByText(/Nitrite/)).toBeInTheDocument();
     });
   });
-  
+
   test('navigating to Roots Radar page', async () => {
     renderWithRouterAndAuth(<Routes />, { route: '/roots-radar' });
     await waitFor(() => {
@@ -265,7 +252,7 @@ describe('Route tests with error handling', () => {
       expect(screen.getByText(/This website is a project developed by a computer science student/)).toBeInTheDocument();
     });
   });
-  
+
   test('navigating to EaseMind Personal Details page', async () => {
     renderWithRouterAndAuth(<Routes />, { route: '/EaseMind_personal_details' });
     await waitFor(() => {
@@ -289,7 +276,7 @@ describe('Route tests with error handling', () => {
       expect(screen.getByRole('button', { name: 'Save Details' })).toBeInTheDocument();
     });
   });
-  
+
   test('navigating to Autism Detector main page', async () => {
     renderWithRouterAndAuth(<Routes />, { route: '/autism_instructions' });
     await waitFor(() => {

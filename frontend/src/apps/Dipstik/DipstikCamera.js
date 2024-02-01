@@ -5,7 +5,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faArrowsRotate, faPaperPlane } from '@fortawesome/free-solid-svg-icons'
 import { useNavigate } from "react-router-dom";
 import * as cvstfjs from "@microsoft/customvision-tfjs";
-import useWindowSize from '../../hooks/useWindowSize';
 
 let BASEURL = "";
 process.env.NODE_ENV === "development"
@@ -186,9 +185,6 @@ const detectDipstick = async () => {
     }, 1000);
     return () => clearInterval(interval);
   }, []);
-
-  console.log(cameraWorking);
-  
 
 // // // COMBINED END
 // // //****************************************************************
