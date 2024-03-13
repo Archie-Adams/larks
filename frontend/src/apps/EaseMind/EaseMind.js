@@ -5,6 +5,7 @@ import ChatBox from './ChatBox';
 import PopUp from './PopUp';
 
 function EaseMind() {
+  // Initialize showPopUp based on whether the user has already agreed to the pop-up
   const [showPopUp, setShowPopUp] = useState(() => {
     const hasAgreed = localStorage.getItem('hasAgreedToPopUp');
     return !hasAgreed;
@@ -24,6 +25,7 @@ function EaseMind() {
   // Toggle function for ChatBox visibility
   const toggleChatBox = () => {
     setShowChatBox(!showChatBox);
+
   };
 
   return (

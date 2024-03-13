@@ -50,6 +50,7 @@ import EaseMindPD from './apps/EaseMind/panic';
 import EaseMindDailyQ from './apps/EaseMind/DailyQ';
 import EaseMindPTSDTest from './apps/EaseMind/PTSD';
 
+
 import DepressiLess from './apps/DepressiLess/DepressiLess';
 
 // If we want to check each time? Maybe it could be a use memo for when the token changes only?
@@ -103,7 +104,7 @@ function Routes() {
         <Route path="/EaseMind_personal_details" element={<EaseMindPersonalDetails />} />
         <Route path="/EaseMind_anxiety-level-test" element={<EaseMindAnxietyLevelTest />} />
         <Route path="/EaseMind_chatbox" element={<EaseMindChatBox />} />
-        <Route path="/EaseMind_report" element={<EaseMindReport />} />
+        <Route path="/EaseMind_report" element={<EaseMindReport />} />d
         <Route path="/EaseMind_testpage" element={<EaseMindTestPage />} />
         <Route path="/EaseMind_spin" element={<EaseMindSPIN />} />
         <Route path="/EaseMind_pd" element={<EaseMindPD />} />
